@@ -9,7 +9,8 @@ server_address = "192.168.1.143"
 username = "massimo"
 password = "maxmil"
 remote_path = "/Users/massimo/image.jpg"
-local_path = "/home/massimo/thermovision/image.jpg"  # Percorso e nome dell'immagine ridimensionata
+local_path = "/home/massimo/thermovision/image.jpg"
+local_backup_directory = "/home/massimo/thermovision"
 
 
 def capture_and_resize_image():
@@ -23,15 +24,22 @@ def capture_and_resize_image():
     picam2.start_and_capture_file(temp_image_path)
     print(f"Immagine acquisita e salvata temporaneamente come {temp_image_path}")
 
-    # Ridimensiona l'immagine a 640x480
-    with Image.open(temp_image_path) as img:
-        resized_img = img.resize((640, 480))
-        resized_img.save(local_path)
-        print(f"Immagine ridimensionata e salvata come {local_path}")
+    # Genera il nome del file di backup con timestamp
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    backup_image_path = os.path.join(local_backup_directory, f"{timestamp}.jpg")
 
-    # Rimuovi il file temporaneo
-    os.remove(temp_image_path)
-    return local_path
+    # Salva la copia con nome basato sul timestamp
+    os.makedirs(local_backup_directory, exist_ok=True)
+    os.rename(temp_image_path, backup_image_path)
+    print(f"Immagine di backup salvata come {backup_image_path}")
+
+    # Ridimensiona l'immagine di backup a 640x480 e salva come image.jpg
+    with Image.open(backup_image_path) as img:
+        resized_img = img.resize((640, 480))
+        resized_img.save(local_resized_path)
+        print(f"Immagine ridimensionata e salvata come {local_resized_path}")
+
+    return local_resized_path
 
 
 def transfer_file_via_sftp(local_path, remote_path):
