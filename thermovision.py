@@ -13,8 +13,8 @@ CONFIG = {**image_config,
           'resize_shape': (480, 640),  # Image resizing dimensions
           'sigma': 1.0,  # Parameter for Gaussian filter
           'roi_size': 50,  # Size of the ROI (square)
-          'hough_threshold': 100,  # Threshold for Hough transform (line detection)
-          'hough_line_length': 60,  # Minimum line length detected by Hough
+          'hough_threshold': 50,  # Threshold for Hough transform (line detection)
+          'hough_line_length': 30,  # Minimum line length detected by Hough
           'hough_line_gap': 4,  # Maximum gap between segments to consider as a single line
           "angles": [135, 270],  # Reference angles for the thermometer
           "temperatures": [0, 80]  # Temperatures corresponding to reference angles
@@ -162,6 +162,9 @@ def main():
 
         if is_point_in_roi((y0, x0), roi_2_coords) or is_point_in_roi((y1, x1), roi_2_coords) and not roi_2_display:
             roi_2_display = display_line(line, ax)
+
+        else:
+            ax.plot([x0, x1], [y0, y1], color='yellow', linewidth=1)
 
     # Show the image
     plt.show()
