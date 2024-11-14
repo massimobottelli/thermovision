@@ -157,14 +157,14 @@ def main():
         x0, y0 = line[0]  # Start point
         x1, y1 = line[1]  # End point
         # Check if one of the line's endpoints is within one of the two ROIs
-        if is_point_in_roi((y0, x0), roi_1_coords) or is_point_in_roi((y1, x1), roi_1_coords) and not roi_1_display:
+        if (is_point_in_roi((y0, x0), roi_1_coords) or is_point_in_roi((y1, x1), roi_1_coords)) and not roi_1_display:
             roi_1_display = display_line(line, ax)
 
-        if is_point_in_roi((y0, x0), roi_2_coords) or is_point_in_roi((y1, x1), roi_2_coords) and not roi_2_display:
+        if (is_point_in_roi((y0, x0), roi_2_coords) or is_point_in_roi((y1, x1), roi_2_coords)) and not roi_2_display:
             roi_2_display = display_line(line, ax)
 
         else:
-            ax.plot([x0, x1], [y0, y1], color='yellow', linewidth=1)
+            ax.plot([x0, x1], [y0, y1], color='green', linewidth=1)
 
     # Show the image
     plt.show()
