@@ -5,11 +5,11 @@ import os
 import paramiko
 
 # Server credentials and details
-server_address = "192.168.1.143"
-username = "massimo"
-password = "maxmil"
-remote_path = "/Users/massimo/image.jpg"
-local_directory = "/home/massimo/thermovision"
+server_address = "server_IP_address"
+username = "your_username"
+password = "your_password"
+remote_path = "/remote/path/image.jpg" 
+local_directory = "/local/path/images" 
 
 
 def capture_and_save_images():
