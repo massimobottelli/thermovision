@@ -1,0 +1,32 @@
+1. Scegli le librerie
+OpenCV: per l’elaborazione delle immagini. Offre molte funzioni per rilevare e analizzare forme, bordi, e linee.
+NumPy: per l'elaborazione numerica e la manipolazione dei dati dell'immagine.
+scikit-image (opzionale): alcune funzioni utili per l’elaborazione delle immagini, anche se molte sono già presenti in OpenCV.
+Tesseract (OCR): se serve rilevare il testo (come i numeri sulla scala del termometro).
+Pillow: per la gestione delle immagini, soprattutto se servono operazioni aggiuntive come il caricamento e la conversione dei formati.
+
+2. Pre-processamento dell’immagine
+Converti in scala di grigi: riduce la complessità e facilita il rilevamento dei bordi.
+Ridimensionamento e riduzione del rumore: ridimensiona l’immagine e applica un filtro (es. Gaussian Blur) per eliminare dettagli non rilevanti.
+Equalizzazione dell'istogramma (opzionale): migliora il contrasto, utile per distinguere chiaramente la lancetta dalla scala.
+
+3. Rileva i quadranti dei termometri
+Detection dei cerchi: usa l'algoritmo di Hough Circle Transform in OpenCV per rilevare i quadranti. Questo ti permette di individuare il centro e il raggio di ciascun termometro.
+Verifica dei risultati: puoi impostare filtri per evitare falsi positivi, tenendo solo i cerchi delle dimensioni appropriate.
+
+4. Rileva la scala e la posizione delle lancette
+Rileva la lancetta: una volta identificato il centro del cerchio, puoi usare il rilevamento delle linee con Hough Line Transform per trovare la lancetta.
+Identifica la linea corretta: elimina le linee che non sono in prossimità del centro del quadrante, così da isolare la lancetta principale.
+Angolo della lancetta: calcola l’angolo della linea rispetto alla verticale o a un'altra posizione di riferimento.
+
+5. Mappe di calibrazione
+Rileva e calibra la scala numerica: misura l’intervallo angolare per ottenere l'equivalenza tra angoli e valori di temperatura.
+Calcola la temperatura: converti l'angolo della lancetta in temperatura utilizzando la calibrazione definita. Se la scala va da 0 a 160°C, per esempio, mappa gli angoli rilevati a questa scala.
+
+6. Output e debug
+Visualizza i risultati: mostra la temperatura letta su ogni termometro. Usa OpenCV per disegnare i risultati sulle immagini per un debug visivo.
+Test e correzione: prova il programma su immagini diverse e regola i parametri di rilevamento per migliorare l’accuratezza.
+
+
+
+

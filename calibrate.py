@@ -11,9 +11,6 @@ CONFIG = {
     'roi_size': 50,  # Size of the ROI square side
 }
 
-# List to save click coordinates
-click_points = []
-
 # Path to the JSON configuration file
 CONFIG_PATH = 'config.json'
 
@@ -41,10 +38,12 @@ def save_config(config, path):
 # Callback for user click
 def on_click(event):
     # Check if the click occurred within the image
-    if event.inaxes is not None and len(click_points) < 2:
+    if event.inaxes is not None:
         # Get the click coordinates
         x, y = int(event.xdata), int(event.ydata)
-        click_points.append((y, x))
+
+        # Save the clicked coordinates as the center
+        CONFIG['center'] = (y, x)
 
         # Calculate the ROI rectangle coordinates
         roi_size = CONFIG['roi_size']
@@ -57,12 +56,11 @@ def on_click(event):
         event.inaxes.add_patch(rect)
         plt.draw()
 
-        # Save the points to the JSON file after the second click
-        if len(click_points) == 2:
-            CONFIG['center_1'] = click_points[0]
-            CONFIG['center_2'] = click_points[1]
-            save_config(CONFIG, CONFIG_PATH)  # Save to the JSON file
-            plt.gcf().canvas.mpl_disconnect(cid)  # Disable further clicks
+        # Save the points to the JSON file
+        save_config(CONFIG, CONFIG_PATH)
+
+        # Disable further clicks
+        plt.gcf().canvas.mpl_disconnect(cid)
 
 
 # Main function
