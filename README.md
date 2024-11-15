@@ -3,6 +3,8 @@
 
 This project demonstrates how to digitize the readings of an analog dial thermometer using a Raspberry Pi, computer vision, and Python. The system captures an image of the thermometer, processes it to determine the position of the needle, and calculates the corresponding temperature.
 
+![Thermometer Needle Detection](/sample-detection.jpeg)
+
 
 ## Features
 
